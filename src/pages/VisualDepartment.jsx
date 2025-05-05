@@ -21,7 +21,7 @@ export default function VisualDepartment() {
             <div className="page-services-block" style={{ marginTop: '10px' }}>
               <ul className="page-list">
                 <li>Etkileşimli enstalasyonlar & Projection mapping</li>
-                <li>3D Billboard tasarımları</li>
+                <li>CGI/3D Billboard içerikleri</li>
                 <li>AR/VR Projeleri</li>
                 <li>Etkinlik görselleri & LED ekran içerikleri</li>
               </ul>

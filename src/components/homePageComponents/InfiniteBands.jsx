@@ -8,18 +8,18 @@ const departments = [
     title: "3D & Visual Production",
     direction: "left",
     images: [
-      "public/projects/haufen-portfolio.png",
-      "public/projects/brio-portfolio.png",
-      "public/projects/haufen-portfolio.png",
+      "projects/haufen-portfolio.png",
+      "projects/brio-portfolio.png",
+      "projects/haufen-portfolio.png",
     ],
   },
   {
     title: "Digital Marketing & Software/Game Development",
     direction: "right",
     images: [
-      "public/projects/brio-portfolio.png",
-      "public/projects/haufen-portfolio.png",
-      "public/projects/brio-portfolio.png",
+      "projects/brio-portfolio.png",
+      "projects/haufen-portfolio.png",
+      "projects/brio-portfolio.png",
     ],
   },
 ];
