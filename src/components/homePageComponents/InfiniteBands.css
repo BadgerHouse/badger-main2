@@ -1,0 +1,127 @@
+/* InfiniteBands.css */
+
+.bands-container {
+  position: relative;
+  width: 100%;
+  padding: 2.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  z-index: 1;
+}
+
+.bands-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.bands-background img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.bands-container h1 {
+  text-align: center;
+  width: 100%;
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #e5e5e5;
+  margin-bottom: 2rem;
+  z-index: 2;
+}
+
+.band-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  overflow: hidden;
+  height: 25vh;
+  transform: scale(0.85);
+  transition: transform 0.4s ease;
+  z-index: 2;
+}
+
+.band-wrapper:hover {
+  transform: scale(1);
+}
+
+.band-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fffdfd;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+.band {
+  display: flex;
+  gap: 1rem;
+  width: max-content;
+  animation: scroll-left 30s linear infinite;
+}
+
+.track-right {
+  animation: scroll-right 30s linear infinite;
+}
+
+.band-item {
+  flex: none;
+  width: 260px;
+  height: 150px;
+  position: relative;
+  border-radius: 10px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.band-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+}
+
+.band-item::after {
+  content: none !important;
+}
+
+@keyframes scroll-left {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes scroll-right {
+  0% {
+    transform: translateX(-50%);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+@media (max-width: 768px) {
+  .band-item {
+    width: 200px;
+    height: 120px;
+  }
+
+  .band-title {
+    font-size: 1rem;
+  }
+
+  .bands-container {
+    padding: 2rem 1rem;
+    gap: 1rem;
+  }
+}

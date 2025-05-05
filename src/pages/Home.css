@@ -1,0 +1,14 @@
+/* Global Font Tanımlaması */
+* {
+  font-family: 'Poppins', sans-serif;
+}
+
+/* ===============================
+   Genel Ayarlar
+=============================== */
+.home {
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Eğer Home sayfasına özel başka genel stil ayarları eklemeniz gerekiyorsa bu kısma ekleyebilirsiniz. */

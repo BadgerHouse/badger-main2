@@ -1,0 +1,44 @@
+.lang-container {
+    width: 32px;
+    height: 24px;
+    position: relative;
+    cursor: pointer;
+    overflow: hidden;
+  }
+  
+  .lang-flag {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+    border-radius: 4px;
+    top: 0;
+    left: 0;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+  }
+  
+  .flag-under {
+    z-index: 0;
+  }
+  
+  .flag-over {
+    z-index: 1;
+  }
+  
+  /* Hover animasyonu (hala mevcut) */
+  .lang-container:hover .flag-over {
+    transform: translateX(12px);
+  }
+  
+  /* Dil değişince üst bayrağın kayarak çıkması */
+  .slide-out {
+    transform: translateX(40px);
+    opacity: 0;
+  }
+  
+  /* Alttaki bayrağın yumuşakça belirmesi */
+  .fade-in {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  
