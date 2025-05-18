@@ -3,7 +3,7 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Header kaybolma animasyonu */
+/* Header scroll hide */
 .scroll-hide {
   transform: translateY(-100%);
   transition: transform 0.3s ease;
@@ -19,8 +19,7 @@
   transition: transform 0.3s ease;
 }
 
-
-/* HEADER KISMINIZ - Aynen koruyabilirsiniz */
+/* Header */
 .header {
   width: 100%;
   position: fixed;
@@ -51,7 +50,6 @@
   background: rgba(85, 85, 85, 0.5);
   padding: 0.5rem 2rem;
   border-radius: 50px;
-  height: auto;
   margin-top: 40px;
 }
 
@@ -59,9 +57,9 @@
   display: flex;
   gap: 2rem;
   list-style: none;
+  align-items: center;
   margin: 0;
   padding: 0;
-  align-items: center;
 }
 
 .nav-menu a {
@@ -110,12 +108,7 @@
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    90deg,
-    transparent,
-    rgba(255, 119, 0, 0.5),
-    transparent
-  );
+  background: linear-gradient(90deg, transparent, rgba(255, 119, 0, 0.5), transparent);
   transition: 0.5s;
 }
 
@@ -128,10 +121,10 @@
   box-shadow: 0 0 10px rgba(255, 119, 0, 0.5);
 }
 
-/* ---- DROPDOWN ANİMASYONLU KISIM ---- */
-
+/* Dropdown */
 .dropdown-container {
   position: relative;
+  
 }
 
 .dropdown-toggle {
@@ -143,15 +136,12 @@
   font-weight: 500;
   cursor: pointer;
   border-radius: 4px;
-  overflow: hidden;
-  background-color: transparent; 
+  background-color: transparent;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: auto;
 }
 
-/* Services butonundaki harf animasyonu */
 .dropdown-toggle span {
   display: inline-block;
   line-height: 1;
@@ -175,17 +165,17 @@
 .dropdown-toggle:hover span:nth-child(6) { animation-delay: 0.15s; }
 .dropdown-toggle:hover span:nth-child(7) { animation-delay: 0.18s; }
 .dropdown-toggle:hover span:nth-child(8) { animation-delay: 0.21s; }
+.dropdown-toggle:hover span:nth-child(9) { animation-delay: 0.24s; }
 
 .dropdown-menu {
   position: absolute;
+  margin: 0;
   top: 100%;
-  left: 0;
   background-color: white;
-  min-width: 280px;
-  min-height: 140px;
+  min-width: 200px;
+  padding: 0; /* istersen bırak, tam yapışık olur */
+  border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 12px 0;
   transform-origin: top;
   transform: scaleY(0);
   opacity: 0;
@@ -194,16 +184,11 @@
   z-index: 1001;
   display: flex;
   flex-direction: column;
-  gap: 6px;
   box-sizing: border-box;
+  align-items: stretch; /* 👈 BU EN ÖNEMLİSİ */
+  gap: 0;
 }
 
-.dropdown-menu li {
-  width: 100%;
-  opacity: 0;
-  transform: translateY(10px);
-  animation: none;
-}
 
 .dropdown-container:hover .dropdown-menu {
   transform: scaleY(1);
@@ -211,82 +196,42 @@
   visibility: visible;
 }
 
-.dropdown-container:hover .dropdown-menu li {
-  animation: fadeUp 0.3s ease forwards;
-}
-
-.dropdown-container:hover .dropdown-menu li:nth-child(1) {
-  animation-delay: 0.1s;
-}
-.dropdown-container:hover .dropdown-menu li:nth-child(2) {
-  animation-delay: 0.2s;
-}
-.dropdown-container:hover .dropdown-menu li:nth-child(3) {
-  animation-delay: 0.3s;
-}
-
 @keyframes fadeUp {
-  0% {
-    opacity: 0;
-    transform: translateY(10px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
 
-.dropdown-menu a {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 0.5rem 1rem;
+
+.dropdown-menu li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.dropdown-menu button {
+  all: unset; /* tüm varsayılan button stilini kaldır */
+  display: block;
+  width: 100%;            /* TAM GENİŞLİK ✅ */
+  padding: 12px 16px;     /* soldan boşluk ✅ */
+  text-align: left;       /* sola hizalama ✅ */
+  font-size: 15px;
   color: #333;
-  transition: background-color 0.2s ease;
-  text-decoration: none;
-  border-radius: 6px;
   background-color: transparent;
-  font-size: 0.95rem;
-  white-space: nowrap;
-  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
   box-sizing: border-box;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin-bottom: -25px;
+  border: none;
+  border-radius: 0;       /* yuvarlatma yok */
 }
 
-.dropdown-menu a img {
-  width: 20px;
-  height: 20px;
-  object-fit: contain;
-  flex-shrink: 0;
-}
-
-.dropdown-menu a:hover {
+.dropdown-menu button:hover {
   background-color: #f5f5f5;
   color: #ff7700;
 }
 
-.dropdown-menu a::after {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .nav-menu {
-    display: none;
-  }
-
-  .header-container {
-    padding: 0.5rem 1rem;
-    height: auto;
-  }
-
-  .logo img {
-    height: 32px;
-  }
-}
 
 
+/* Responsive */
 .hamburger {
   display: none;
   background: none;
@@ -294,7 +239,7 @@
   font-size: 2rem;
   color: white;
   cursor: pointer;
-  z-index: 2000;
+  z-index: 1100;
 }
 
 .desktop-menu {
@@ -310,58 +255,25 @@
 }
 
 @media (max-width: 768px) {
+  .nav-menu {
+    display: none;
+  }
+
+  .header-container {
+    padding: 0.5rem 1rem;
+    height: auto;
+  }
+
+  .logo img {
+    height: 32px;
+  }
+
   .hamburger {
     display: block;
   }
 
   .desktop-menu {
     display: none;
-  }
-
-  .mobile-menu {
-    display: flex;
-    flex-direction: column;
-    background: rgba(10, 10, 10, 0.95);
-    position: absolute;
-    top: 80px;
-    left: 0;
-    width: 100%;
-    padding: 1rem;
-    z-index: 999;
-  }
-
-  .mobile-menu ul {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin: 0;
-    padding: 0;
-    list-style: none;
-  }
-
-  .desktop-cta {
-    display: none;
-  }
-}
-
-.hamburger {
-  display: none;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
-  z-index: 1100;
-}
-
-/* Mobil Menü */
-.mobile-menu {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .hamburger {
-    display: block;
   }
 
   .mobile-menu {
@@ -374,14 +286,12 @@
     width: 100%;
     padding: 1rem;
     z-index: 999;
-    display: none;
     transform: translateY(-10px);
     opacity: 0;
     transition: all 0.3s ease;
   }
 
   .mobile-menu.open {
-    display: flex;
     transform: translateY(0);
     opacity: 1;
   }
@@ -402,4 +312,46 @@
     font-size: 1rem;
     text-decoration: none;
   }
+
+  .desktop-cta {
+    display: none;
+  }
+}
+
+/* ---------------------- */
+/* TAM KONTROLLÜ DROPDOWN BUTON STİLİ */
+/* ---------------------- */
+
+.dropdown-menu {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: stretch !important;
+  gap: 0 !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  box-sizing: border-box;
+}
+
+.dropdown-menu li {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.dropdown-menu button {
+  all: unset;
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 12px 16px;
+  font-size: 15px;
+  color: #333;
+  cursor: pointer;
+  box-sizing: border-box;
+  transition: background-color 0.2s ease, color 0.2s ease;
+  border-radius: 8px;       /* yuvarlatma yok */
+}
+
+.dropdown-menu button:hover {
+  background-color: #f5f5f5;
+  color: #ff7700;
 }

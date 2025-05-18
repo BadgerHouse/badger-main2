@@ -18,6 +18,8 @@ import './components/Transitions.css';
 import SoftwareDepartment from './pages/SoftwareDepartment';
 import VisualDepartment from './pages/VisualDepartment';
 import MarketingDepartment from './pages/MarketingDepartment';
+import { PortfolioProvider } from './contexts/PortfolioContext';
+import PortfolioModal from './components/PortfolioModal';
 
 const AnimatedRoutes = () => {
   const location = useLocation();
@@ -55,7 +57,10 @@ function App() {
   return (
     <LanguageProvider>
     <Router>
+    <PortfolioProvider>
       <AnimatedRoutes />
+      <PortfolioModal />
+    </PortfolioProvider>
     </Router>
     </LanguageProvider>
   );

@@ -1,5 +1,3 @@
-/* InfiniteBands.css */
-
 .bands-container {
   position: relative;
   width: 100%;
@@ -41,15 +39,9 @@
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  overflow: hidden;
+  overflow: visible;
   height: 25vh;
-  transform: scale(0.85);
-  transition: transform 0.4s ease;
   z-index: 2;
-}
-
-.band-wrapper:hover {
-  transform: scale(1);
 }
 
 .band-title {
@@ -64,11 +56,21 @@
   display: flex;
   gap: 1rem;
   width: max-content;
-  animation: scroll-left 30s linear infinite;
+  animation-duration: 80s;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
 }
 
-.track-right {
-  animation: scroll-right 30s linear infinite;
+.scroll-left {
+  animation-name: scroll-left;
+}
+
+.scroll-right {
+  animation-name: scroll-right;
+}
+
+.band:hover {
+  animation-play-state: paused;
 }
 
 .band-item {
@@ -81,11 +83,30 @@
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
-.band-item img {
+.band-item img,
+.video-thumb.no-click {
   width: 100%;
   height: 100%;
   object-fit: contain;
   display: block;
+  transition: transform 0.3s ease;
+  border-radius: 10px;
+}
+
+.video-thumb.no-click {
+  pointer-events: none;
+  object-fit: cover;
+}
+
+.band-item:hover {
+  transform: scale(1.5);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  z-index: 5;
+}
+
+.band-item:hover img,
+.band-item:hover .video-thumb {
+  transform: scale(1.05);
 }
 
 .band-item::after {

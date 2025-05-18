@@ -13,8 +13,8 @@ const Home = () => {
   const [textIndex, setTextIndex] = useState(0);
 
   const texts = {
-    tr: ["Yazılım.", "Görsel.", "Reklam.", "Sosyal."],
-    en: ["Software.", "Visuals.", "Advertising.", "Social."]
+    tr: ["Dijital.", "Tasarım.", "CGI.", "Yazılım.", "Strateji.", "3D İçerik.", "Pazarlama.","AR/VR","Kreatif"],
+    en: ["Digital.", "Design.", "CGI.", "Software.", "Strategy.", "3D Content.", "Marketing.","AR/VR","Creative"]
   };
 
   const handleAnimationIteration = () => {

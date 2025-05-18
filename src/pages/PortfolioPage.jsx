@@ -1,176 +1,168 @@
 import React, { useState, useEffect } from 'react';
 import './PortfolioPage.css';
+import portfolioItems from '../data/portfolioItems';
 
-const portfolioItems = [
-  {
-    id: 1,
-    title: 'Website Redesign',
-    category: 'Design',
-    description: 'A complete redesign of a corporate website.',
-    images: ['/projects/brio-portfolio.png', '/projects/haufen-portfolio.png']
-  },
-  {
-    id: 2,
-    title: 'E-commerce App',
-    category: 'Development',
-    description: 'Full-stack e-commerce application.',
-    images: ['/projects/brio-portfolio.png', '/projects/haufen-portfolio.png']
-  },
-  {
-    id: 3,
-    title: 'Brand Video Campaign',
-    category: 'PR',
-    description: 'Promotional video for product launch.',
-    images: ['/projects/brio-portfolio.png', '/projects/haufen-portfolio.png'],
-    video: '/images/moon.mp4'
-  },
-];
 
-const categories = ['All', 'Design', 'Development', 'PR'];
+// 1. Medya dosyalarını thumbnail hariç çek
+const allMedia = import.meta.glob('../assets/projects/*/*.{jpg,jpeg,png,mp4}', { eager: true });
+
+// 2. Thumbnail'i çek (her klasörde sabit dosya: thumbnail.jpeg)
+const getThumbnail = (folderName) => {
+  try {
+    return new URL(`../assets/projects/${folderName}/thumbnail.jpeg`, import.meta.url).href;
+  } catch {
+    return null;
+  }
+};
+
+// 3. Thumbnail harici medya dosyalarını çek
+const getMediaByFolder = (folderName) => {
+  const mediaList = Object.keys(allMedia)
+    .filter(
+      path =>
+        path.includes(`/projects/${folderName}/`) &&
+        !path.toLowerCase().endsWith('thumbnail.jpeg')
+    )
+    .map(path => {
+      const url = allMedia[path].default;
+      const type = url.endsWith('.mp4') ? 'video' : 'image';
+      return { url, type };
+    });
+
+  mediaList.sort((a, b) => a.type === 'video' ? -1 : 1);
+  return mediaList;
+};
+
 
 const PortfolioPage = () => {
-  const [activeCategory, setActiveCategory] = useState('All');
   const [modalData, setModalData] = useState(null);
   const [slideIndex, setSlideIndex] = useState(0);
-
-  const filteredItems = activeCategory === 'All'
-    ? portfolioItems
-    : portfolioItems.filter(item => item.category === activeCategory);
 
   useEffect(() => {
     const grid = document.querySelector('.portfolio-grid');
     if (grid) {
-      if (filteredItems.length === 1) {
+      if (portfolioItems.length === 1) {
         grid.classList.add('single-item');
       } else {
         grid.classList.remove('single-item');
       }
     }
-  }, [filteredItems]);
+  }, []);
 
   const openModal = (item) => {
-    setModalData(item);
+    const media = getMediaByFolder(item.folder);
+    if (!media || media.length === 0) return;
+    setModalData({ ...item, media });
     setSlideIndex(0);
+    document.body.style.overflow = 'hidden';
   };
 
   const closeModal = () => {
     setModalData(null);
+    document.body.style.overflow = 'auto';
   };
 
   const nextSlide = () => {
-    if (!modalData) return;
-    const total = modalData.video ? modalData.images.length + 1 : modalData.images.length;
-    setSlideIndex((slideIndex + 1) % total);
+    setSlideIndex(prev => {
+      const total = modalData?.media?.length || 0;
+      return (prev + 1) % total;
+    });
   };
-
+  
   const prevSlide = () => {
-    if (!modalData) return;
-    const total = modalData.video ? modalData.images.length + 1 : modalData.images.length;
-    setSlideIndex((slideIndex - 1 + total) % total);
+    setSlideIndex(prev => {
+      const total = modalData?.media?.length || 0;
+      return (prev - 1 + total) % total;
+    });
   };
+  
 
   const renderSlide = () => {
-    if (!modalData) return null;
-    if (modalData.video && slideIndex === 0) {
+    if (!modalData || !modalData.media?.length) return null;
+  
+    const current = modalData.media[slideIndex];
+    if (!current) return null;
+  
+    if (current.type === 'video') {
       return (
         <div className="modal-video-wrapper">
-          <video controls className="modal-video">
-            <source src={modalData.video} type="video/mp4" />
+          <video key={slideIndex} controls className="modal-video">
+            <source src={current.url} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
         </div>
       );
-    } else {
-      const imageIndex = modalData.video ? slideIndex - 1 : slideIndex;
-      return (
-        <img
-          src={modalData.images[imageIndex]}
-          alt={`Project Slide ${imageIndex + 1}`}
-          className="modal-image"
-        />
-      );
     }
+  
+    return (
+      <img
+        key={slideIndex}
+        src={current.url}
+        alt={`slide-${slideIndex}`}
+        className="modal-image"
+      />
+    );
   };
+  
 
   const renderThumbnails = () => {
-    if (!modalData) return null;
-    const thumbs = [];
-
-    if (modalData.video) {
-      thumbs.push(
-        <div
-          key="video"
-          className={`thumbnail-item ${slideIndex === 0 ? 'active' : ''}`}
-          onClick={() => setSlideIndex(0)}
-        >
-          <video className="thumbnail-video" src={modalData.video} muted />
-        </div>
-      );
-    }
-
-    modalData.images.forEach((img, i) => {
-      const trueIndex = modalData.video ? i + 1 : i;
-      thumbs.push(
-        <div
-          key={i}
-          className={`thumbnail-item ${slideIndex === trueIndex ? 'active' : ''}`}
-          onClick={() => setSlideIndex(trueIndex)}
-        >
-          <img src={img} alt={`thumb-${i}`} />
-        </div>
-      );
-    });
-
-    return <div className="thumbnail-gallery">{thumbs}</div>;
+    if (!modalData || !modalData.media?.length) return null;
+    return (
+      <div className="thumbnail-gallery">
+        {modalData.media.map((item, i) => (
+          <div
+            key={i}
+            className={`thumbnail-item ${slideIndex === i ? 'active' : ''}`}
+            onClick={() => setSlideIndex(i)}
+          >
+            {item.type === 'video' ? (
+              <video className="thumbnail-video" src={item.url} muted />
+            ) : (
+              <img src={item.url} alt={`thumb-${i}`} />
+            )}
+          </div>
+        ))}
+      </div>
+    );
   };
 
   return (
     <div className="portfolio-grid-section">
       <h2>Our Work</h2>
-
-      <div className="filter-buttons">
-        {categories.map(cat => (
-          <button
-            key={cat}
-            className={activeCategory === cat ? 'active' : ''}
-            onClick={() => setActiveCategory(cat)}
-          >
-            {cat}
-          </button>
-        ))}
-      </div>
-
       <div className="portfolio-grid">
-        {filteredItems.map(item => (
-          <div key={item.id} className="portfolio-item" onClick={() => openModal(item)}>
-            <img src={item.images[0]} alt={item.title} />
-            <div className="item-info">
-              <h3>{item.title}</h3>
-              <p>{item.description}</p>
+        {portfolioItems.map(item => {
+          const thumbnail = getThumbnail(item.folder);
+          if (!thumbnail) return null;
+
+          return (
+            <div key={item.id} className="portfolio-item" onClick={() => openModal(item)}>
+              <img src={thumbnail} alt={item.title} className="item-thumbnail" />
+              <div className="item-info">
+                <h3>{item.title}</h3>
+                <p>{item.description}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
 
       {modalData && (
         <div className="modal-backdrop" onClick={closeModal}>
           <div className="modal-content fade-in-scale" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>×</button>
-
             <div className="modal-main-with-thumbs">
               {renderSlide()}
               {renderThumbnails()}
             </div>
-
             <h3>{modalData.title}</h3>
             <p>{modalData.description}</p>
+            {modalData?.media?.length > 1 && (
+  <div className="modal-controls">
+    <button onClick={prevSlide}>Previous</button>
+    <button onClick={nextSlide}>Next</button>
+  </div>
+)}
 
-            {(modalData.images.length > 1 || modalData.video) && (
-              <div className="modal-controls">
-                <button onClick={prevSlide}>Previous</button>
-                <button onClick={nextSlide}>Next</button>
-              </div>
-            )}
           </div>
         </div>
       )}

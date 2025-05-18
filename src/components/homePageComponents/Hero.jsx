@@ -35,8 +35,8 @@ const Hero = ({ language, texts, textIndex, handleAnimationIteration }) => {
         </div>
         <p className="hero-subtitle responsive-subtitle">
           {language === 'tr'
-            ? "Dijital dünyada güvenilir çözüm ortağınız"
-            : "Your trusted partner in the digital world"}
+            ? "Creative Tech Studio & Digital Partner"
+            : "Creative Tech Studio & Digital Partner"}
         </p>
       </div>
     </section>
