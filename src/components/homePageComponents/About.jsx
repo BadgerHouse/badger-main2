@@ -10,19 +10,15 @@ const About = () => {
     <>
       <section className="about">
         <div className="about-content">
-          <p>
+          <h2>
             {language === 'tr'
               ? "Üç Uzman Ekip. Tek Stüdyo"
               : "Three Expert Team - One Studio."}
-          </p>
+          </h2>
         </div>
       </section>
 
-      <section className="slogan">
-        <div className="slogan-content">
-          <h2>{language === 'tr' ? "Yarına Hoş Geldin" : "Welcome to Tomorrow"}</h2>
-        </div>
-      </section>
+     
     </>
   );
 };

@@ -1,8 +1,7 @@
-// src/components/PortfolioModal.jsx
-import React from "react";
+import React, { useEffect } from "react";
 import { usePortfolio } from "../contexts/PortfolioContext";
 import { useLanguage } from "../contexts/LanguageContext";
-import "../pages/PortfolioPage.css";
+import "./PortfolioModal.css";
 
 const texts = {
   tr: {
@@ -16,55 +15,63 @@ const texts = {
 };
 
 const PortfolioModal = () => {
-  const { modalData, slideIndex, setSlideIndex, closeModal } = usePortfolio();
-  const { language = 'tr' } = useLanguage();
+  const {
+    modalData,
+    slideIndex,
+    setSlideIndex,
+    closeModal
+  } = usePortfolio();
+
+  const { language = "tr" } = useLanguage();
 
   if (!modalData || !modalData.media?.length) return null;
 
+  const currentMedia = modalData.media[slideIndex];
+
   const nextSlide = () => {
-    const total = modalData.media.length;
-    setSlideIndex((prev) => (prev + 1) % total);
+    setSlideIndex((prev) => (prev + 1) % modalData.media.length);
   };
 
   const prevSlide = () => {
-    const total = modalData.media.length;
-    setSlideIndex((prev) => (prev - 1 + total) % total);
+    setSlideIndex((prev) => (prev - 1 + modalData.media.length) % modalData.media.length);
   };
 
   const renderSlide = () => {
-    const current = modalData.media[slideIndex];
-    if (!current) return null;
+    if (!currentMedia) return null;
 
-    if (current.type === "video") {
+    if (currentMedia.type === "video") {
       return (
-        <div className="modal-video-wrapper">
-          <video key={slideIndex} controls className="modal-video">
-            <source src={current.url} type="video/mp4" />
-          </video>
-        </div>
+        <video
+          key={currentMedia.url}
+          controls
+          className="modal-media"
+          preload="metadata"
+        >
+          <source src={currentMedia.url} type="video/webm" />
+        </video>
       );
     }
 
     return (
       <img
-        key={slideIndex}
-        src={current.url}
+        key={currentMedia.url}
+        src={currentMedia.url}
         alt={`slide-${slideIndex}`}
-        className="modal-image"
+        className="modal-media"
       />
     );
   };
 
   const renderThumbnails = () => (
-    <div className="thumbnail-gallery">
+    <div className="modal-thumbnails-vertical">
       {modalData.media.map((item, i) => (
         <div
           key={i}
-          className={`thumbnail-item ${slideIndex === i ? "active" : ""}`}
+          className={`thumb ${slideIndex === i ? "active" : ""}`}
           onClick={() => setSlideIndex(i)}
         >
           {item.type === "video" ? (
-            <video className="thumbnail-video" src={item.url} muted />
+            <video src={item.url} muted />
           ) : (
             <img src={item.url} alt={`thumb-${i}`} />
           )}
@@ -73,24 +80,51 @@ const PortfolioModal = () => {
     </div>
   );
 
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (!modalData) return;
+      switch (e.key) {
+        case "Escape":
+          closeModal();
+          break;
+        case "ArrowLeft":
+          prevSlide();
+          break;
+        case "ArrowRight":
+          nextSlide();
+          break;
+        default:
+          break;
+      }
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [modalData]);
+
   return (
     <div className="modal-backdrop" onClick={closeModal}>
-      <div className="modal-content fade-in-scale" onClick={(e) => e.stopPropagation()}>
-        <button className="modal-close" onClick={closeModal}>
-          ×
-        </button>
-        <div className="modal-main-with-thumbs">
-          {renderSlide()}
-          {renderThumbnails()}
-        </div>
-        <h3>{modalData.title}</h3>
-        <p>{modalData.description}</p>
-        {modalData.media.length > 1 && (
-          <div className="modal-controls">
-            <button onClick={prevSlide}>{texts[language].prev}</button>
-            <button onClick={nextSlide}>{texts[language].next}</button>
+      <div className="modal-window" onClick={(e) => e.stopPropagation()}>
+        <button className="modal-close" onClick={closeModal}>×</button>
+
+        <div className="modal-main-horizontal">
+          <div className="modal-media-area">
+            {renderSlide()}
+            <div className="media-with-thumbnails">
+              {renderThumbnails()}
+            </div>
           </div>
-        )}
+        </div>
+
+        <div className="modal-info">
+          <h3>{modalData.title}</h3>
+          <p>{modalData.description}</p>
+        </div>
+
+        <div className="modal-nav">
+          <button onClick={prevSlide}>{texts[language].prev}</button>
+          <button onClick={nextSlide}>{texts[language].next}</button>
+        </div>
       </div>
     </div>
   );

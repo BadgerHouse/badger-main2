@@ -86,7 +86,7 @@ const Contact = () => {
           <h1>Badger House</h1>
           <h3>Creative Digital Solutions Agency</h3>
           <p><b>{texts[language].address}:</b> Merkez Mah. Seçkin sk. Z Ofis no:2-4A, iç kapı no: 108, Kağıthane/İstanbul, Türkiye</p>
-          <p><b>E-Mail:</b> hello@badgerhouse.co</p>
+          <p><b>E-Mail:</b> contact@thebadger.house</p>
           <div className="map-container">
             <iframe
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3007.6265209860044!2d28.96930177604401!3d41.07715597134103!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14cab7b725e56a55%3A0xff0ec0f30d714af4!2sBadger%20House!5e0!3m2!1str!2str!4v1745855739467!5m2!1str!2str"

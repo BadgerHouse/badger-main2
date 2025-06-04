@@ -15,7 +15,7 @@ const texts = {
     visualProd: "Görsel Prodüksiyon",
     portfolio: "Portfolyo",
     threeD: "3D Billboard",
-    branding: "Marka İşleri",
+    branding: "Markalar",
     contact: "İletişim"
   },
   en: {
@@ -26,10 +26,12 @@ const texts = {
     visualProd: "Visual Production",
     portfolio: "Portfolio",
     threeD: "3D Billboard",
-    branding: "Branding Works",
+    branding: "Brands",
     contact: "Contact Us!"
   }
 };
+
+
 
 const Header = () => {
   const { language = 'tr' } = useLanguage();
@@ -39,6 +41,7 @@ const Header = () => {
   const isMobile = useIsMobile();
   const navigate = useNavigate();
 
+  
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollY = window.scrollY;
@@ -50,6 +53,18 @@ const Header = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, [lastScrollY]);
 
+  const [closing, setClosing] = useState(false); // eksikse bu da lazım
+
+const handleNavigate = (path) => {
+  setClosing(true);
+  setTimeout(() => {
+    setMenuOpen(false);
+    setClosing(false);
+    navigate(path);
+  }, 300); // animasyon süresi kadar
+};
+
+
   const renderAnimatedText = (text) => {
     const used = new Set();
     return text.split('').map((char, i) => {
@@ -59,17 +74,17 @@ const Header = () => {
     });
   };
 
-  const handleNavigate = (path) => {
-    navigate(path);
-    setMenuOpen(false);
-  };
-
   return (
     <header className={`header ${hideHeader ? 'scroll-hide' : ''}`}>
       <div className="header-container">
-        <div className="logo" onClick={() => navigate('/') }>
-          <img src={logo} alt="Logo" />
-        </div>
+        <div className="logo-wrapper" onClick={() => navigate('/')}>
+  <div className="logo-glow"></div>
+  <div className="logo">
+    <img src={logo} alt="Logo" />
+  </div>
+</div>
+
+
 
         <button
           className="hamburger"
@@ -97,8 +112,8 @@ const Header = () => {
                 {renderAnimatedText(texts[language]?.portfolio || 'Portfolio')}
               </span>
               <ul className="dropdown-menu" style={{ minHeight: 'unset' }}>
-                <li><button onClick={() => navigate('/3d-billboards')}>{texts[language]?.threeD}</button></li>
-                <li><button onClick={() => navigate('/marka-isleri')}>{texts[language]?.branding}</button></li>
+                <li><button onClick={() => navigate('/portfolio/3d-billboards')}>{texts[language]?.threeD}</button></li>
+                <li><button onClick={() => navigate('/portfolio/marka-isleri')}>{texts[language]?.branding}</button></li>
               </ul>
             </li>
             <li><LanguageSwitcher /></li>
@@ -112,14 +127,16 @@ const Header = () => {
               <li><button onClick={() => handleNavigate('/departments/marketing')}>{texts[language]?.digitalMarketing}</button></li>
               <li><button onClick={() => handleNavigate('/departments/software')}>{texts[language]?.softwareDev}</button></li>
               <li><button onClick={() => handleNavigate('/departments/visual')}>{texts[language]?.visualProd}</button></li>
-              <li><button onClick={() => handleNavigate('/3d-billboards')}>{texts[language]?.threeD}</button></li>
-              <li><button onClick={() => handleNavigate('/marka-isleri')}>{texts[language]?.branding}</button></li>
-              <li><LanguageSwitcher /></li>
+              <li><button onClick={() => handleNavigate('/portfolio/3d-billboards')}>{texts[language]?.threeD}</button></li>
+              <li><button onClick={() => handleNavigate('/portfolio/marka-isleri')}>{texts[language]?.branding}</button></li>
               <li>
                 <button className="get-offer-btn" onClick={() => handleNavigate('/contact')}>
                   {texts[language]?.contact || 'Contact'}
                 </button>
               </li>
+              <li className="lang-toggle">
+  <LanguageSwitcher />
+</li>
             </ul>
           </nav>
         )}

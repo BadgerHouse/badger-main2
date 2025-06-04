@@ -1,42 +1,46 @@
-// src/pages/3DBillboardPage.jsx
 import React from "react";
-import { usePortfolio } from "../context/PortfolioContext";
-import "../styles/PortfolioPage.css";
+import { usePortfolio } from "../contexts/PortfolioContext";
+import "./PortfolioPage.css";
 
 const ThreeDBillboardPage = () => {
   const { portfolioItems, openModal } = usePortfolio();
-  const filteredItems = portfolioItems.filter(item => item.type === "3d");
+  const items3D = portfolioItems.filter((item) => item.type === "3d");
+
+  const isVideoThumbnail = (thumbnailUrl) => {
+    return thumbnailUrl && thumbnailUrl.endsWith(".webm");
+  };
 
   return (
-    <div className="portfolio-grid-section">
-      <h2>3D Billboard Projeleri</h2>
-      <div className="portfolio-grid">
-        {filteredItems.map(item => {
-          const media = item.media?.[0]; // Her 3d item tek video içerir
-          if (!media) return null;
-
-          return (
-            <div key={item.id} className="portfolio-item" onClick={() => openModal(item)}>
-              {media.type === 'video' ? (
+    <section className="portfolio-grid-section">
+      <h2>3D Billboard</h2>
+      <div className={`portfolio-grid ${items3D.length === 1 ? "single-item" : ""}`}>
+        {items3D.map((item) => (
+          <div key={item.id} className="portfolio-item" onClick={() => openModal(item)}>
+            {item.thumbnail ? (
+              isVideoThumbnail(item.thumbnail) ? (
                 <video
-  className="video-thumb no-click"
-  src={media.url}
-  muted
-  playsInline
-  preload="none"
-  poster={media.url.replace('.mp4', '.jpg')}
-/>
-
-              ) : null}
-              <div className="item-info">
-                <h3>{item.title}</h3>
-                <p>{item.description}</p>
-              </div>
-            </div>
-          );
-        })}
+                  src={item.thumbnail}
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  className="portfolio-thumb-video"
+                />
+              ) : (
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="portfolio-thumb-image"
+                />
+              )
+            ) : (
+              <div className="no-thumbnail">No Thumbnail</div>
+            )}
+            <h4>{item.title}</h4>
+          </div>
+        ))}
       </div>
-    </div>
+    </section>
   );
 };
 

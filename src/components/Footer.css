@@ -1,5 +1,5 @@
 .footer {
-  background-color: #000; /* Siyah arka plan */
+  background-color: #000;
   color: white;
   padding: 3rem 2rem;
   font-family: 'Poppins', sans-serif;
@@ -12,8 +12,8 @@
   gap: 4rem;
   max-width: 1200px;
   margin: 0 auto;
+  flex-wrap: wrap;
 }
-
 
 .footer-column {
   flex: 1;
@@ -27,6 +27,7 @@
   color: white;
 }
 
+/* Title ve linkler */
 .footer-column h3 {
   font-size: 1.1rem;
   margin-bottom: 1rem;
@@ -49,9 +50,10 @@
 }
 
 .footer-column a:hover {
-  color: #F59E0B; /* Header hover rengi (accentColor) */
+  color: #F59E0B;
 }
 
+/* Sosyal ikonlar */
 .footer-social {
   margin-top: 2.5rem;
   text-align: center;
@@ -66,14 +68,33 @@
 
 .footer-social a:hover {
   transform: scale(1.2);
-  color: #F59E0B; /* Hover rengi yine header ile uyumlu */
+  color: #F59E0B;
 }
 
+/* Desktop'ta açıklama daha geniş */
 .footer-column:first-child {
   flex: 2;
 }
 
-.footer-column:not(:first-child) {
-  flex: 1;
+/* Mobilde açıklama tamamen gizleniyor ama kolon yapısı bozulmuyor */
+@media (max-width: 768px) {
+  .footer-description {
+    display: none;
+  }
+
+  .footer-column:first-child {
+    display: none;
+  }
+  a {
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
+  box-shadow: none;
 }
 
+a:focus,
+a:active {
+  outline: none;
+  box-shadow: none;
+}
+
+}

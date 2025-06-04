@@ -3,7 +3,7 @@
     position: relative;
     width: 100%;
     min-height: 45vh;
-    background-color: #000000;
+    background-color: black;
     overflow: hidden;
     display: flex;
     justify-content: center;
@@ -23,6 +23,7 @@
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
     min-height: 260px;
     position: relative;
+    background-color: transparent !important;
   }
   
   /* Sol taraf - Logo */
@@ -32,7 +33,6 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: #000000;
     overflow: hidden;
     border-radius: 0 0 0 10px;
   }
@@ -46,6 +46,7 @@
     height: 100%;
     z-index: 1;
     overflow: visible;
+    
   }
   
   .card-logo {
@@ -66,7 +67,16 @@
     z-index: 1;
     animation: glow-pulse 5s ease-in-out infinite;
     opacity: 0.8;
+    
   }
+  .card-left::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: transparent;
+  z-index: -1;
+}
+
   
   @keyframes glow-pulse {
     0%, 100% {
@@ -112,6 +122,13 @@
     width: max-content;
   }
   
+  .scroll-content {
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-fill-mode: forwards;
+}
+
+
   .brand-row {
     display: flex;
     align-items: center;
@@ -142,4 +159,47 @@
       transform: translateX(-50%);
     }
   }
+
+@media (max-width: 768px) {
+  .card-left {
+    display: none !important;
+  }
+
+  .card-right {
+    display: flex !important;
+    width: 100% !important;
+    flex: 1 1 auto;
+    padding: 1rem 0;
+    border-radius: 10px;
+  }
+
+  .minimal-card {
+    flex-direction: column;
+    min-height: auto;
+    width: 100%;
+  }
+
+  .brand-logo {
+    height: 40px;
+    margin: 0 20px;
+  }
+
+  .scroll-content {
+    animation-duration: 40s;
+  }
+
+  .minimal-card-section {
+    padding: 40px 20px;
+  }
+
+   .infinite-scroll-container {
+  height: 100px; /* veya sabit bir yükseklik */
+}
+
+}
+
+  .logo-container {
+  background-color: transparent !important;
+}
+
   

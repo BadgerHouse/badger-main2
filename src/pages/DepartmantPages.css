@@ -107,3 +107,68 @@ body {
   font-size: 20px;
   font-weight: bold;
 }
+
+@media (max-width: 768px) {
+  .page-wrapper {
+    padding: 80px 16px;
+  }
+
+  .page-content {
+    margin-top: 3rem;
+    gap: 40px;
+    padding: 0 10px;
+  }
+
+  .page-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .page-title-block h1 {
+    font-size: 42px;
+    text-align: center;
+  }
+
+  .page-services-block,
+  .page-description-block {
+    padding: 24px;
+  }
+
+  .section-title {
+    font-size: 20px;
+    text-align: center;
+  }
+
+  .page-description-block p {
+    font-size: 18px;
+    text-align: justify;
+  }
+
+  .page-list li {
+    font-size: 16px;
+    padding-left: 20px;
+    margin-bottom: 12px;
+  }
+
+  .page-list li::before {
+    font-size: 18px;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title-block h1 {
+    font-size: 32px;
+  }
+
+  .section-title {
+    font-size: 18px;
+  }
+
+  .page-description-block p {
+    font-size: 16px;
+  }
+
+  .page-list li {
+    font-size: 15px;
+  }
+}

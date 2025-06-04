@@ -1,10 +1,12 @@
-/* PortfolioPage.css - Temizlenmiş & Güncellenmiş */
+/* PortfolioPage.css - Temizlenmiş */
 
 * {
   font-family: 'Poppins', sans-serif;
   box-sizing: border-box;
 }
 
+/* Sayfa Grid Yapısı */
+.page-grid-section,
 .portfolio-grid-section {
   background-color: #000;
   color: white;
@@ -12,12 +14,14 @@
   text-align: center;
 }
 
+.page-grid-section h2,
 .portfolio-grid-section h2 {
   font-size: 2.5rem;
   color: #ff7700;
   margin: 50px 0 2rem;
 }
 
+.page-grid,
 .portfolio-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -26,6 +30,7 @@
   margin: 0 auto;
 }
 
+.page-grid.single-item,
 .portfolio-grid.single-item {
   display: flex;
   justify-content: center;
@@ -33,11 +38,13 @@
   gap: 2rem;
 }
 
+.page-grid.single-item .portfolio-item,
 .portfolio-grid.single-item .portfolio-item {
   max-width: 340px;
   width: 100%;
 }
 
+/* Kart */
 .portfolio-item {
   background: #1a1a1a;
   border-radius: 16px;
@@ -51,13 +58,19 @@
   transform: scale(1.02);
 }
 
-.portfolio-item img {
+/* Görsel & Video */
+.portfolio-item img,
+.portfolio-thumb-image,
+.portfolio-thumb-video {
   width: 100%;
   aspect-ratio: 16 / 9;
   object-fit: cover;
   display: block;
+  border-radius: 12px;
+  background-color: #000;
 }
 
+/* Info Alanı */
 .item-info {
   padding: 1rem;
   text-align: left;
@@ -73,171 +86,46 @@
   color: #aaa;
 }
 
-.modal-backdrop {
-  position: fixed;
-  inset: 0;
-  background-color: rgba(0, 0, 0, 0.85);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9999;
-  backdrop-filter: blur(6px);
-  padding: 2rem;
-}
-
-.modal-content {
-  background: #111;
-  padding: 2rem;
-  border-radius: 12px;
-  max-width: 90vw;
-  max-height: 90vh;
-  width: 100%;
-  color: white;
-  overflow: auto;
-  animation: fadeScale 0.4s ease forwards;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: relative;
-
-}
-
-.modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  background: none;
-  color: white;
-  border: none;
-  font-size: 1.5rem;
-  cursor: pointer;
-}
-
-.modal-main-with-thumbs {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  width: 100%;
-  max-height: 60vh;
-  margin-bottom: 1rem;
-  gap: 1rem;
-  overflow: hidden;
-}
-
-
-.modal-image,
-.modal-video {
-  max-width: 65vw;
-  max-height: 60vh;
-  width: auto;
-  height: auto;
-  border-radius: 8px;
-  object-fit: contain;
-  background-color: #000;
-}
-
-
-.thumbnail-gallery {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  max-height: 70vh;
-  overflow-y: auto;
-  padding-right: 4px;
-  align-items: center;
-}
-
-.thumbnail-item {
-  width: 80px;
-  height: 50px;
-  border-radius: 6px;
-  overflow: hidden;
-  cursor: pointer;
-  opacity: 0.6;
-  transition: all 0.2s ease;
-  border: 2px solid transparent;
-  flex-shrink: 0;
-}
-
-.thumbnail-item img,
-.thumbnail-item video {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-.thumbnail-item:hover,
-.thumbnail-item.active {
-  opacity: 1;
-  border-color: #ff7700;
-  transform: scale(1.05);
-}
-
-.modal-controls {
-  display: flex;
-  justify-content: center;
-  gap: 1rem;
-  flex-wrap: wrap;
-  margin-top: 1rem;
-  padding-bottom: 1rem;
-}
-
-
-.modal-controls button {
-  background-color: #ff7700;
-  border: none;
-  padding: 0.6rem 1.4rem;
-  border-radius: 20px;
-  color: white;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-}
-
-.modal-controls button:hover {
-  background-color: #ff8800;
-}
-
-/* PortfolioPage.css içine ekle */
-.video-thumb {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-  border-radius: 10px;
-  display: block;
-}
-
-
-@keyframes fadeScale {
-  0% {
-    opacity: 0;
-    transform: scale(0.85);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
+/* Responsive */
 @media (max-width: 768px) {
-  .modal-main-with-thumbs {
+  .portfolio-grid,
+  .page-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .portfolio-item {
+    border-radius: 12px;
+  }
+
+  .portfolio-grid.single-item,
+  .page-grid.single-item {
     flex-direction: column;
     align-items: center;
-    max-height: unset;
   }
 
-  .modal-image,
-  .modal-video {
-    max-width: 90vw;
-    max-height: 50vh;
+  .portfolio-grid.single-item .portfolio-item,
+  .page-grid.single-item .portfolio-item {
+    max-width: 100%;
   }
 
-  .thumbnail-gallery {
-    flex-direction: row;
-    overflow-x: auto;
-    max-width: 90vw;
-    padding: 0.5rem 0;
-    margin-left: 0;
+  .item-info {
+    padding: 0.75rem;
+  }
+
+  .item-info h3 {
+    font-size: 1rem;
+  }
+
+  .item-info p {
+    font-size: 0.85rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .portfolio-thumb-image,
+  .portfolio-thumb-video {
+    aspect-ratio: 4 / 3;
+    border-radius: 10px;
   }
 }

@@ -5,54 +5,69 @@ import { useLanguage } from "../../contexts/LanguageContext";
 
 const texts = {
   tr: {
-    header: "Projelerimiz",
-    band3d: "3D Billboard İşleri",
-    bandOther: "Marka İşleri"
+    band3d: "3D Billboards",
+    bandOther: "Markalar"
   },
   en: {
-    header: "Our Works",
-    band3d: "3D Billboard Projects",
-    bandOther: "Branding Works"
+    band3d: "3D Billboard",
+    bandOther: "Brands"
   }
 };
 
-const InfiniteBands = () => {
-  const { portfolioItems, getThumbnail, openModal } = usePortfolio();
-  const { language = 'tr' } = useLanguage();
+const InfinityBands = () => {
+  const { portfolioItems, openModal } = usePortfolio();
+  const { language = "tr" } = useLanguage();
 
   const items3D = portfolioItems.filter((item) => item.type === "3d");
   const itemsOther = portfolioItems.filter((item) => item.type === "other");
+
+  // Thumbnail'ın video mu görsel mi olduğunu kontrol et (.webm mi diye bakıyoruz)
+  const isVideoThumbnail = (thumbnailUrl) => {
+    return thumbnailUrl && thumbnailUrl.endsWith(".webm");
+  };
 
   const renderBand = (title, items, direction = "left") => (
     <div className="band-wrapper">
       <h3 className="band-title">{title}</h3>
       <div className={`band scroll-${direction}`}>
-        {[...items, ...items].map((item, index) => {
-          const media = item.media?.[0];
-          const thumbnail = getThumbnail(item.folder);
-
-          return (
-            <div
-              className="band-item"
-              key={`${item.id}-${index}`}
-              onClick={() => openModal(item)}
-              style={{ cursor: "pointer" }}
-            >
-              {item.type === "3d" && media?.type === "video" ? (
+        {[...items, ...items].map((item, index) => (
+          <div
+            className="band-item"
+            key={`${item.id}-${index}`}
+            onClick={() => openModal(item)}
+            style={{ cursor: "pointer" }}
+          >
+            {item.thumbnail ? (
+              isVideoThumbnail(item.thumbnail) ? (
                 <video
-                  className="video-thumb no-click"
-                  src={media.url}
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="band-thumb"
+                  autoPlay
+                  loop
                   muted
                   playsInline
-                  preload="none"
-                  poster={media.url.replace('.mp4', '.jpg')}
+                  onError={(e) => {
+                    console.log("Video yüklenemedi:", item.thumbnail);
+                    e.target.style.display = "none";
+                  }}
                 />
               ) : (
-                thumbnail && <img src={thumbnail} alt={item.title} />
-              )}
-            </div>
-          );
-        })}
+                <img
+                  src={item.thumbnail}
+                  alt={item.title}
+                  className="band-thumb"
+                  onError={(e) => {
+                    console.log("Görsel yüklenemedi:", item.thumbnail);
+                    e.target.style.display = "none";
+                  }}
+                />
+              )
+            ) : (
+              <div className="band-placeholder">No Preview</div>
+            )}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -62,11 +77,10 @@ const InfiniteBands = () => {
       <div className="bands-background">
         <img src="/images/badger-portf-2.svg" alt="Background" />
       </div>
-      <h1>{texts[language].header}</h1>
       {renderBand(texts[language].band3d, items3D, "left")}
       {renderBand(texts[language].bandOther, itemsOther, "right")}
     </div>
   );
 };
 
-export default InfiniteBands;
+export default InfinityBands;

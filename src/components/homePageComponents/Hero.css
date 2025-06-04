@@ -1,124 +1,92 @@
-/* ===============================
-   Hero Bölümü (Video Arkaplanlı)
-=============================== */
 .hero {
-    width: 100%;
-    height: 100vh;
-    background: #222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
+  width: 100%;
+  height: 100vh;
+  background-color: #222;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.video-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
   
-  .video-background {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 1;
-  }
-  
-  .hero-video {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0);
-    z-index: 2;
-  }
-  
-  .hero-content {
-    position: relative;
-    z-index: 3;
-    max-width: 800px;
-    padding: 0 2rem;
-  }
-  
-  .hero-title-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 1rem;
-    margin-bottom: 1rem;
-    flex-wrap: nowrap;
-    width: 100%;
-  }
-  
-  .hero-content h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    color: #ffffff;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-    margin: 0;
-    white-space: nowrap;
-    font-family: 'Acworth-Bold.otf', sans-serif;
-  }
-  
-  .hero-content p {
-    font-size: 1.5rem;
-    opacity: 0.9;
-    color: #ffffff;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
-    margin-bottom: 2rem;
-    width: 100%;
-    text-align: center;
-  }
-  
-  
-  /* ===============================
-     Statik Hero Bölümü (Animasyonlu Metin)
-  =============================== */
-  .hero-static {
-    width: 100%;
-    height: 100vh;
-    background: #222;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .hero-heading {
-    font-size: 3rem;
-    color: #fff;
-    text-align: center;
-  }
-  
-  .animated-text {
-    display: inline-block;
-    animation: fadeCycle 5s ease-in-out infinite;
-    white-space: nowrap;
-    color: #ff7700;
-    font-family: 'Acworth-Bold.otf', sans-serif;
-  }
-  
-  @keyframes fadeCycle {
-    0% {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    20% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    70% {
-      opacity: 1;
-      transform: translateY(0);
-    }
-    90% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-    100% {
-      opacity: 0;
-      transform: translateY(-10px);
-    }
-  }
-  
+}
+
+.hero-video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 1;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0);
+  z-index: 2;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 3;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.hero-heading {
+  font-size: clamp(2rem, 5vw, 4rem);
+  color: #fff;
+  margin: 0;
+  position: relative;
+}
+
+.animated-text-wrapper {
+  display: inline-block;
+  min-width: 280px;
+  height: 60px;
+  line-height: 60px;
+  overflow: visible;
+  position: relative;
+}
+
+.animated-text {
+  display: inline-block;
+  white-space: nowrap;
+  color: #ff7700;
+}
+
+.cursor {
+  display: inline-block;
+  width: 3px;            /* İnce çizgi */
+  height: 0.9em;           /* Yazı yüksekliğine göre */
+  margin-left: 4px;      /* Yazıdan az uzaklık */
+  background-color: #ff7700;  /* Ana renk */
+  animation: blink 1s step-end infinite;
+  opacity: 1;
+}
+
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.hero-subtitle {
+  font-size: 1.25rem;
+  color: white;
+  margin-top: 1.5rem;
+  opacity: 0.9;
+}
